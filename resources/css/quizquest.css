@@ -1,0 +1,1602 @@
+/* ============================================================
+   QUIZQUEST.CSS — Main Stylesheet
+   Letakkan di: resources/css/quizquest.css
+   Daftarkan di vite.config.js: input: ['resources/css/quizquest.css']
+   ============================================================ */
+
+/* ---- GOOGLE FONTS ---- */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ============================================================
+   CSS VARIABLES — LIGHT MODE (default)
+   ============================================================ */
+:root {
+    /* Background */
+    --qq-bg-base:        #F2EFE9;
+    --qq-bg-card:        #FDFAF6;
+    --qq-bg-sidebar:     #1A1714;
+    --qq-bg-sidebar-active: #2C2825;
+    --qq-bg-input:       #F7F4EF;
+    --qq-bg-hover:       rgba(26,23,20,0.04);
+
+    /* Text */
+    --qq-text-primary:   #1A1714;
+    --qq-text-secondary: #6B6560;
+    --qq-text-muted:     #A09A94;
+    --qq-text-sidebar:   #908A83;
+    --qq-text-sidebar-active: #F4F0EB;
+    --qq-text-on-accent: #FFFFFF;
+
+    /* Accent (Coral/Amber) */
+    --qq-accent:         #D85A30;
+    --qq-accent-hover:   #C04F28;
+    --qq-accent-light:   #FAECE7;
+    --qq-accent-border:  rgba(216,90,48,0.3);
+
+    /* AI (Purple) */
+    --qq-ai-primary:     #534AB7;
+    --qq-ai-light:       #EEEDFE;
+    --qq-ai-border:      rgba(83,74,183,0.25);
+
+    /* Semantic */
+    --qq-success:        #1D9E75;
+    --qq-success-bg:     #E1F5EE;
+    --qq-warning:        #BA7517;
+    --qq-warning-bg:     #FAEEDA;
+    --qq-danger:         #A32D2D;
+    --qq-danger-bg:      #FCEBEB;
+    --qq-info:           #185FA5;
+    --qq-info-bg:        #E6F1FB;
+
+    /* Border */
+    --qq-border:         rgba(26,23,20,0.09);
+    --qq-border-strong:  rgba(26,23,20,0.18);
+
+    /* Shadow */
+    --qq-shadow-sm:      0 1px 3px rgba(26,23,20,0.07);
+    --qq-shadow-md:      0 4px 12px rgba(26,23,20,0.10);
+    --qq-shadow-lg:      0 8px 28px rgba(26,23,20,0.13);
+
+    /* Dimensions */
+    --qq-sidebar-width:  220px;
+    --qq-radius:         14px;
+    --qq-radius-sm:      8px;
+    --qq-radius-xs:      6px;
+    --qq-radius-pill:    100px;
+
+    /* Typography */
+    --qq-font:           'Sora', sans-serif;
+    --qq-font-mono:      'JetBrains Mono', monospace;
+
+    /* Transitions */
+    --qq-transition:     0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   CSS VARIABLES — DARK MODE
+   ============================================================ */
+[data-theme="dark"] {
+    --qq-bg-base:        #131110;
+    --qq-bg-card:        #1D1A17;
+    --qq-bg-sidebar:     #0C0A09;
+    --qq-bg-sidebar-active: #252119;
+    --qq-bg-input:       #252119;
+    --qq-bg-hover:       rgba(255,255,255,0.05);
+
+    --qq-text-primary:   #F0EDE8;
+    --qq-text-secondary: #8A837B;
+    --qq-text-muted:     #5A5550;
+    --qq-text-sidebar:   #6B6560;
+    --qq-text-sidebar-active: #F0EDE8;
+
+    --qq-accent:         #E8714A;
+    --qq-accent-hover:   #D85A30;
+    --qq-accent-light:   rgba(216,90,48,0.15);
+    --qq-accent-border:  rgba(232,113,74,0.3);
+
+    --qq-ai-primary:     #7F77DD;
+    --qq-ai-light:       rgba(83,74,183,0.18);
+    --qq-ai-border:      rgba(127,119,221,0.25);
+
+    --qq-success:        #1D9E75;
+    --qq-success-bg:     rgba(29,158,117,0.15);
+    --qq-warning:        #EF9F27;
+    --qq-warning-bg:     rgba(186,117,23,0.15);
+    --qq-danger:         #E24B4A;
+    --qq-danger-bg:      rgba(162,45,45,0.15);
+    --qq-info:           #378ADD;
+    --qq-info-bg:        rgba(24,95,165,0.15);
+
+    --qq-border:         rgba(255,255,255,0.07);
+    --qq-border-strong:  rgba(255,255,255,0.14);
+
+    --qq-shadow-sm:      0 1px 4px rgba(0,0,0,0.35);
+    --qq-shadow-md:      0 4px 14px rgba(0,0,0,0.45);
+    --qq-shadow-lg:      0 8px 32px rgba(0,0,0,0.55);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--qq-font);
+    background: var(--qq-bg-base);
+    color: var(--qq-text-primary);
+    line-height: 1.6;
+    transition: background var(--qq-transition), color var(--qq-transition);
+    min-height: 100vh;
+}
+
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; font-family: var(--qq-font); }
+input, textarea, select { font-family: var(--qq-font); }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* ============================================================
+   APP SHELL — LAYOUT UTAMA
+   ============================================================ */
+.qq-shell {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.qq-sidebar {
+    width: var(--qq-sidebar-width);
+    flex-shrink: 0;
+    background: var(--qq-bg-sidebar);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 100;
+    transition: transform var(--qq-transition), background var(--qq-transition);
+    overflow-y: auto;
+}
+
+/* Logo */
+.qq-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 22px 20px 18px;
+    border-bottom: 0.5px solid rgba(255,255,255,0.06);
+}
+
+.qq-logo-icon {
+    width: 32px; height: 32px;
+    background: var(--qq-accent);
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--qq-font-mono);
+    font-weight: 700;
+    font-size: 16px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.qq-logo-text {
+    font-size: 17px;
+    font-weight: 800;
+    color: #F4F0EB;
+    letter-spacing: -0.03em;
+}
+
+.qq-logo-text span {
+    color: var(--qq-accent);
+}
+
+/* Navigation */
+.qq-nav {
+    padding: 14px 0;
+    flex: 1;
+}
+
+.qq-nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.22);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    padding: 6px 20px 4px;
+}
+
+.qq-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 20px;
+    color: var(--qq-text-sidebar);
+    font-size: 13.5px;
+    font-weight: 400;
+    position: relative;
+    transition: background var(--qq-transition), color var(--qq-transition);
+}
+
+.qq-nav-item:hover {
+    background: rgba(255,255,255,0.05);
+    color: #D9D4CE;
+}
+
+.qq-nav-item.active {
+    background: var(--qq-bg-sidebar-active);
+    color: var(--qq-text-sidebar-active);
+    font-weight: 600;
+}
+
+.qq-nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px; bottom: 7px;
+    width: 3px;
+    background: var(--qq-accent);
+    border-radius: 0 3px 3px 0;
+}
+
+.qq-nav-item i {
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.qq-badge {
+    margin-left: auto;
+    background: var(--qq-accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: var(--qq-font-mono);
+    padding: 2px 7px;
+    border-radius: var(--qq-radius-pill);
+    line-height: 1.4;
+}
+
+/* AI Trigger Button */
+.qq-ai-trigger {
+    margin: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    background: var(--qq-ai-light);
+    border: 1px solid var(--qq-ai-border);
+    border-radius: var(--qq-radius-sm);
+    color: var(--qq-ai-primary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: all var(--qq-transition);
+}
+
+.qq-ai-trigger:hover {
+    background: rgba(83,74,183,0.22);
+    border-color: var(--qq-ai-primary);
+    transform: translateY(-1px);
+}
+
+.qq-ai-trigger i {
+    font-size: 17px;
+}
+
+.qq-ai-pulse {
+    position: absolute;
+    top: 10px; right: 12px;
+    width: 8px; height: 8px;
+    background: var(--qq-ai-primary);
+    border-radius: 50%;
+    animation: qq-pulse 2s infinite;
+}
+
+@keyframes qq-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+/* Sidebar Footer */
+.qq-sidebar-footer {
+    padding: 14px 16px;
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+}
+
+.qq-user-chip {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.qq-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--qq-accent), var(--qq-ai-primary));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    font-family: var(--qq-font-mono);
+}
+
+.qq-user-info { flex: 1; min-width: 0; }
+
+.qq-user-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #E8E4DE;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.qq-user-role {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+}
+
+/* ============================================================
+   MAIN CONTENT AREA
+   ============================================================ */
+.qq-main {
+    flex: 1;
+    margin-left: var(--qq-sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin var(--qq-transition);
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.qq-topbar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 28px;
+    background: var(--qq-bg-card);
+    border-bottom: 0.5px solid var(--qq-border);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    transition: background var(--qq-transition), border-color var(--qq-transition);
+}
+
+.qq-hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--qq-text-secondary);
+    font-size: 22px;
+    padding: 4px;
+    border-radius: var(--qq-radius-xs);
+    transition: color var(--qq-transition);
+}
+
+.qq-hamburger:hover { color: var(--qq-text-primary); }
+
+.qq-topbar-title { flex: 1; }
+
+.qq-page-title {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--qq-text-primary);
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+}
+
+.qq-page-sub {
+    font-size: 12.5px;
+    color: var(--qq-text-secondary);
+    margin-top: 2px;
+}
+
+.qq-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Theme Toggle */
+.qq-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--qq-bg-input);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius-pill);
+    padding: 5px 12px;
+    color: var(--qq-text-secondary);
+    font-size: 13px;
+    transition: all var(--qq-transition);
+}
+
+.qq-theme-toggle:hover {
+    border-color: var(--qq-accent);
+    color: var(--qq-accent);
+}
+
+.qq-toggle-track {
+    width: 30px; height: 16px;
+    background: var(--qq-border-strong);
+    border-radius: var(--qq-radius-pill);
+    position: relative;
+    transition: background var(--qq-transition);
+}
+
+.qq-toggle-track.on { background: var(--qq-accent); }
+
+.qq-toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform var(--qq-transition);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.qq-toggle-thumb.on { transform: translateX(14px); }
+
+/* Icon Button */
+.qq-icon-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px;
+    background: none;
+    border: 0.5px solid transparent;
+    border-radius: var(--qq-radius-sm);
+    color: var(--qq-text-secondary);
+    font-size: 18px;
+    transition: all var(--qq-transition);
+    flex-shrink: 0;
+}
+
+.qq-icon-btn:hover {
+    background: var(--qq-bg-hover);
+    border-color: var(--qq-border);
+    color: var(--qq-text-primary);
+}
+
+/* Notif button */
+.qq-notif-btn { position: relative; }
+
+.qq-notif-dot {
+    position: absolute;
+    top: 6px; right: 6px;
+    width: 7px; height: 7px;
+    background: var(--qq-accent);
+    border-radius: 50%;
+    border: 1.5px solid var(--qq-bg-card);
+}
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.qq-content {
+    padding: 28px;
+    flex: 1;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.qq-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 18px;
+    border-radius: var(--qq-radius-sm);
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: var(--qq-font);
+    border: 1.5px solid transparent;
+    transition: all var(--qq-transition);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.qq-btn i { font-size: 17px; }
+
+.qq-btn-primary {
+    background: var(--qq-accent);
+    color: #fff;
+    border-color: var(--qq-accent);
+}
+
+.qq-btn-primary:hover {
+    background: var(--qq-accent-hover);
+    border-color: var(--qq-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--qq-accent-border);
+}
+
+.qq-btn-outline {
+    background: transparent;
+    color: var(--qq-text-primary);
+    border-color: var(--qq-border-strong);
+}
+
+.qq-btn-outline:hover {
+    background: var(--qq-bg-hover);
+    border-color: var(--qq-text-secondary);
+}
+
+.qq-btn-ghost {
+    background: transparent;
+    color: var(--qq-text-secondary);
+    border-color: transparent;
+}
+
+.qq-btn-ghost:hover {
+    background: var(--qq-bg-hover);
+    color: var(--qq-text-primary);
+}
+
+.qq-btn-ai {
+    background: var(--qq-ai-light);
+    color: var(--qq-ai-primary);
+    border-color: var(--qq-ai-border);
+}
+
+.qq-btn-ai:hover {
+    background: rgba(83,74,183,0.2);
+}
+
+.qq-btn-sm {
+    padding: 6px 13px;
+    font-size: 12.5px;
+}
+
+.qq-btn-lg {
+    padding: 12px 24px;
+    font-size: 15px;
+    border-radius: var(--qq-radius);
+}
+
+/* ============================================================
+   CARDS
+   ============================================================ */
+.qq-card {
+    background: var(--qq-bg-card);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius);
+    padding: 20px 22px;
+    transition: background var(--qq-transition), border-color var(--qq-transition), box-shadow var(--qq-transition);
+}
+
+.qq-card:hover {
+    border-color: var(--qq-border-strong);
+    box-shadow: var(--qq-shadow-sm);
+}
+
+.qq-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.qq-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--qq-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.qq-card-subtitle {
+    font-size: 12px;
+    color: var(--qq-text-secondary);
+    margin-top: 2px;
+}
+
+/* ============================================================
+   STAT CARDS (Dashboard)
+   ============================================================ */
+.qq-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.qq-stat-card {
+    background: var(--qq-bg-card);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius);
+    padding: 18px 20px;
+    transition: all var(--qq-transition);
+}
+
+.qq-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--qq-shadow-md);
+}
+
+.qq-stat-icon {
+    width: 38px; height: 38px;
+    border-radius: var(--qq-radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    margin-bottom: 12px;
+}
+
+.qq-stat-icon.accent   { background: var(--qq-accent-light); color: var(--qq-accent); }
+.qq-stat-icon.ai       { background: var(--qq-ai-light); color: var(--qq-ai-primary); }
+.qq-stat-icon.success  { background: var(--qq-success-bg); color: var(--qq-success); }
+.qq-stat-icon.warning  { background: var(--qq-warning-bg); color: var(--qq-warning); }
+
+.qq-stat-label {
+    font-size: 11.5px;
+    color: var(--qq-text-secondary);
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.qq-stat-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--qq-text-primary);
+    font-family: var(--qq-font-mono);
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.qq-stat-change {
+    font-size: 11px;
+    margin-top: 6px;
+    display: flex; align-items: center; gap: 3px;
+}
+
+.qq-stat-change.up { color: var(--qq-success); }
+.qq-stat-change.down { color: var(--qq-danger); }
+
+/* ============================================================
+   QUIZ CARDS
+   ============================================================ */
+.qq-quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.qq-quiz-card {
+    background: var(--qq-bg-card);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius);
+    overflow: hidden;
+    transition: all var(--qq-transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.qq-quiz-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--qq-shadow-md);
+    border-color: var(--qq-border-strong);
+}
+
+.qq-quiz-cover {
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    position: relative;
+    overflow: hidden;
+}
+
+.qq-quiz-cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.15));
+}
+
+.qq-quiz-body {
+    padding: 16px 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.qq-quiz-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--qq-text-primary);
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+}
+
+.qq-quiz-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11.5px;
+    color: var(--qq-text-secondary);
+}
+
+.qq-quiz-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.qq-quiz-meta i { font-size: 14px; }
+
+.qq-quiz-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.qq-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 9px;
+    background: var(--qq-bg-input);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius-pill);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--qq-text-secondary);
+}
+
+.qq-quiz-footer {
+    padding: 12px 18px;
+    border-top: 0.5px solid var(--qq-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Progress bar */
+.qq-progress {
+    height: 4px;
+    background: var(--qq-border);
+    border-radius: var(--qq-radius-pill);
+    overflow: hidden;
+}
+
+.qq-progress-fill {
+    height: 100%;
+    background: var(--qq-accent);
+    border-radius: var(--qq-radius-pill);
+    transition: width 0.6s ease;
+}
+
+/* Difficulty Badge */
+.qq-difficulty {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: var(--qq-radius-pill);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.qq-difficulty.mudah  { background: var(--qq-success-bg); color: var(--qq-success); }
+.qq-difficulty.sedang { background: var(--qq-warning-bg); color: var(--qq-warning); }
+.qq-difficulty.sulit  { background: var(--qq-danger-bg); color: var(--qq-danger); }
+
+/* ============================================================
+   QUIZ TAKE PAGE (halaman mengerjakan quiz)
+   ============================================================ */
+.qq-quiz-take-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.qq-quiz-take-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.qq-quiz-progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--qq-border);
+    border-radius: var(--qq-radius-pill);
+    margin: 0 16px;
+    overflow: hidden;
+}
+
+.qq-quiz-progress-fill {
+    height: 100%;
+    background: var(--qq-accent);
+    border-radius: var(--qq-radius-pill);
+    transition: width 0.4s ease;
+}
+
+.qq-quiz-counter {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--qq-text-secondary);
+    font-family: var(--qq-font-mono);
+    white-space: nowrap;
+}
+
+.qq-timer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--qq-accent-light);
+    color: var(--qq-accent);
+    padding: 6px 14px;
+    border-radius: var(--qq-radius-pill);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: var(--qq-font-mono);
+    border: 1px solid var(--qq-accent-border);
+}
+
+.qq-timer.warning {
+    background: var(--qq-danger-bg);
+    color: var(--qq-danger);
+    border-color: rgba(162,45,45,0.3);
+    animation: qq-timer-pulse 1s infinite;
+}
+
+@keyframes qq-timer-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.qq-question-card {
+    background: var(--qq-bg-card);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius);
+    padding: 28px 30px;
+    margin-bottom: 16px;
+}
+
+.qq-question-num {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--qq-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 10px;
+    font-family: var(--qq-font-mono);
+}
+
+.qq-question-text {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--qq-text-primary);
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+}
+
+.qq-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.qq-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--qq-border);
+    border-radius: var(--qq-radius-sm);
+    cursor: pointer;
+    transition: all var(--qq-transition);
+    background: transparent;
+    text-align: left;
+    width: 100%;
+    color: var(--qq-text-primary);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--qq-font);
+}
+
+.qq-option:hover {
+    border-color: var(--qq-accent-border);
+    background: var(--qq-accent-light);
+    color: var(--qq-accent);
+}
+
+.qq-option.selected {
+    border-color: var(--qq-accent);
+    background: var(--qq-accent-light);
+    color: var(--qq-accent);
+}
+
+.qq-option.correct {
+    border-color: var(--qq-success);
+    background: var(--qq-success-bg);
+    color: var(--qq-success);
+}
+
+.qq-option.wrong {
+    border-color: var(--qq-danger);
+    background: var(--qq-danger-bg);
+    color: var(--qq-danger);
+}
+
+.qq-option-key {
+    width: 28px; height: 28px;
+    border-radius: 7px;
+    background: var(--qq-bg-input);
+    border: 1px solid var(--qq-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--qq-font-mono);
+    flex-shrink: 0;
+    transition: all var(--qq-transition);
+}
+
+.qq-option.selected .qq-option-key,
+.qq-option:hover .qq-option-key {
+    background: var(--qq-accent);
+    border-color: var(--qq-accent);
+    color: #fff;
+}
+
+.qq-option.correct .qq-option-key {
+    background: var(--qq-success);
+    border-color: var(--qq-success);
+    color: #fff;
+}
+
+.qq-option.wrong .qq-option-key {
+    background: var(--qq-danger);
+    border-color: var(--qq-danger);
+    color: #fff;
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.qq-form-group {
+    margin-bottom: 18px;
+}
+
+.qq-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--qq-text-primary);
+    margin-bottom: 6px;
+}
+
+.qq-label-hint {
+    font-weight: 400;
+    color: var(--qq-text-secondary);
+    font-size: 11.5px;
+    margin-left: 6px;
+}
+
+.qq-input,
+.qq-textarea,
+.qq-select {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--qq-bg-input);
+    border: 1px solid var(--qq-border);
+    border-radius: var(--qq-radius-sm);
+    color: var(--qq-text-primary);
+    font-size: 14px;
+    font-family: var(--qq-font);
+    transition: all var(--qq-transition);
+    outline: none;
+}
+
+.qq-input:focus,
+.qq-textarea:focus,
+.qq-select:focus {
+    border-color: var(--qq-accent);
+    background: var(--qq-bg-card);
+    box-shadow: 0 0 0 3px var(--qq-accent-border);
+}
+
+.qq-input::placeholder,
+.qq-textarea::placeholder {
+    color: var(--qq-text-muted);
+}
+
+.qq-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+.qq-input-error {
+    border-color: var(--qq-danger) !important;
+}
+
+.qq-field-error {
+    font-size: 12px;
+    color: var(--qq-danger);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ============================================================
+   ALERT / FLASH MESSAGES
+   ============================================================ */
+.qq-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    margin: 12px 28px 0;
+    border-radius: var(--qq-radius-sm);
+    font-size: 13.5px;
+    font-weight: 500;
+    border: 1px solid;
+    transition: opacity 0.4s;
+}
+
+.qq-alert i { font-size: 18px; flex-shrink: 0; }
+
+.qq-alert-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: inherit;
+    opacity: 0.6;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    padding: 2px;
+}
+
+.qq-alert-success {
+    background: var(--qq-success-bg);
+    border-color: rgba(29,158,117,0.3);
+    color: var(--qq-success);
+}
+
+.qq-alert-danger {
+    background: var(--qq-danger-bg);
+    border-color: rgba(162,45,45,0.3);
+    color: var(--qq-danger);
+}
+
+.qq-alert-warning {
+    background: var(--qq-warning-bg);
+    border-color: rgba(186,117,23,0.3);
+    color: var(--qq-warning);
+}
+
+.qq-alert-info {
+    background: var(--qq-info-bg);
+    border-color: rgba(24,95,165,0.3);
+    color: var(--qq-info);
+}
+
+/* ============================================================
+   AI ASSISTANT PANEL
+   ============================================================ */
+.qq-ai-panel {
+    position: fixed;
+    top: 0; right: 0;
+    width: 360px;
+    height: 100vh;
+    background: var(--qq-bg-card);
+    border-left: 0.5px solid var(--qq-border);
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    transform: translateX(100%);
+    transition: transform var(--qq-transition), background var(--qq-transition);
+    box-shadow: var(--qq-shadow-lg);
+}
+
+.qq-ai-panel.open {
+    transform: translateX(0);
+}
+
+.qq-ai-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 0.5px solid var(--qq-border);
+    flex-shrink: 0;
+}
+
+.qq-ai-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.qq-ai-avatar {
+    width: 38px; height: 38px;
+    background: var(--qq-ai-light);
+    border: 1px solid var(--qq-ai-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--qq-ai-primary);
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.qq-ai-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--qq-text-primary);
+}
+
+.qq-ai-status {
+    font-size: 11.5px;
+    color: var(--qq-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 1px;
+}
+
+.qq-status-dot {
+    width: 7px; height: 7px;
+    background: var(--qq-success);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.qq-ai-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scroll-behavior: smooth;
+}
+
+.qq-ai-bubble {
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    max-width: 88%;
+}
+
+.qq-ai-bubble--bot {
+    background: var(--qq-bg-input);
+    border: 0.5px solid var(--qq-border);
+    color: var(--qq-text-primary);
+    border-radius: 12px 12px 12px 4px;
+    align-self: flex-start;
+}
+
+.qq-ai-bubble--user {
+    background: var(--qq-accent);
+    color: #fff;
+    border-radius: 12px 12px 4px 12px;
+    align-self: flex-end;
+    font-weight: 500;
+}
+
+.qq-ai-bubble.qq-ai-error {
+    background: var(--qq-danger-bg);
+    border-color: rgba(162,45,45,0.2);
+    color: var(--qq-danger);
+}
+
+/* Quick action chips */
+.qq-ai-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-self: flex-start;
+    width: 100%;
+}
+
+.qq-ai-chip {
+    background: var(--qq-bg-card);
+    border: 1px solid var(--qq-border);
+    border-radius: var(--qq-radius-sm);
+    padding: 9px 13px;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--qq-text-primary);
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--qq-font);
+    transition: all var(--qq-transition);
+}
+
+.qq-ai-chip:hover {
+    border-color: var(--qq-ai-border);
+    background: var(--qq-ai-light);
+    color: var(--qq-ai-primary);
+}
+
+/* Loading dots */
+.qq-ai-loading {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 14px 18px;
+}
+
+.qq-ai-loading span {
+    width: 7px; height: 7px;
+    background: var(--qq-text-muted);
+    border-radius: 50%;
+    animation: qq-dots 1.2s infinite;
+}
+
+.qq-ai-loading span:nth-child(2) { animation-delay: 0.2s; }
+.qq-ai-loading span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes qq-dots {
+    0%, 80%, 100% { transform: scale(1); opacity: 0.5; }
+    40% { transform: scale(1.3); opacity: 1; }
+}
+
+/* AI Input Area */
+.qq-ai-input-area {
+    padding: 14px 16px;
+    border-top: 0.5px solid var(--qq-border);
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.qq-ai-input {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--qq-bg-input);
+    border: 1px solid var(--qq-border);
+    border-radius: var(--qq-radius-sm);
+    color: var(--qq-text-primary);
+    font-size: 13.5px;
+    font-family: var(--qq-font);
+    outline: none;
+    transition: border-color var(--qq-transition);
+}
+
+.qq-ai-input:focus {
+    border-color: var(--qq-ai-primary);
+}
+
+.qq-ai-input::placeholder {
+    color: var(--qq-text-muted);
+}
+
+.qq-ai-send {
+    width: 40px; height: 40px;
+    background: var(--qq-ai-primary);
+    border: none;
+    border-radius: var(--qq-radius-sm);
+    color: #fff;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--qq-transition);
+    flex-shrink: 0;
+}
+
+.qq-ai-send:hover {
+    background: #443DB0;
+    transform: scale(1.05);
+}
+
+/* ============================================================
+   OVERLAY (Mobile)
+   ============================================================ */
+.qq-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+    backdrop-filter: blur(2px);
+}
+
+.qq-overlay.active {
+    display: block;
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.qq-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--qq-radius);
+    border: 0.5px solid var(--qq-border);
+}
+
+.qq-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.qq-table thead tr {
+    background: var(--qq-bg-input);
+    border-bottom: 1px solid var(--qq-border);
+}
+
+.qq-table th {
+    padding: 11px 16px;
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--qq-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.qq-table td {
+    padding: 12px 16px;
+    color: var(--qq-text-primary);
+    border-bottom: 0.5px solid var(--qq-border);
+    vertical-align: middle;
+}
+
+.qq-table tbody tr:last-child td { border-bottom: none; }
+
+.qq-table tbody tr:hover td {
+    background: var(--qq-bg-hover);
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+.qq-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    gap: 12px;
+}
+
+.qq-empty-icon {
+    font-size: 52px;
+    color: var(--qq-text-muted);
+    margin-bottom: 4px;
+}
+
+.qq-empty-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--qq-text-primary);
+}
+
+.qq-empty-desc {
+    font-size: 13.5px;
+    color: var(--qq-text-secondary);
+    max-width: 320px;
+    line-height: 1.6;
+}
+
+/* ============================================================
+   PAGINATION
+   ============================================================ */
+.qq-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 24px;
+}
+
+.qq-page-btn {
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius-xs);
+    background: var(--qq-bg-card);
+    color: var(--qq-text-secondary);
+    font-size: 13px;
+    font-family: var(--qq-font-mono);
+    cursor: pointer;
+    transition: all var(--qq-transition);
+}
+
+.qq-page-btn:hover {
+    border-color: var(--qq-accent);
+    color: var(--qq-accent);
+}
+
+.qq-page-btn.active {
+    background: var(--qq-accent);
+    border-color: var(--qq-accent);
+    color: #fff;
+    font-weight: 700;
+}
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.qq-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    animation: qq-fadein 0.2s ease;
+}
+
+@keyframes qq-fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.qq-modal {
+    background: var(--qq-bg-card);
+    border: 0.5px solid var(--qq-border);
+    border-radius: var(--qq-radius);
+    padding: 28px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: var(--qq-shadow-lg);
+    animation: qq-modal-in 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes qq-modal-in {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.qq-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.qq-modal-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--qq-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.qq-modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 0.5px solid var(--qq-border);
+}
+
+/* ============================================================
+   SECTION HEADER
+   ============================================================ */
+.qq-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.qq-section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--qq-text-primary);
+    letter-spacing: -0.02em;
+}
+
+/* ============================================================
+   LEADERBOARD ITEM
+   ============================================================ */
+.qq-leaderboard-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: var(--qq-radius-sm);
+    transition: background var(--qq-transition);
+}
+
+.qq-leaderboard-item:hover { background: var(--qq-bg-hover); }
+
+.qq-rank {
+    width: 28px;
+    text-align: center;
+    font-weight: 800;
+    font-family: var(--qq-font-mono);
+    font-size: 14px;
+    color: var(--qq-text-muted);
+    flex-shrink: 0;
+}
+
+.qq-rank.gold   { color: #BA7517; }
+.qq-rank.silver { color: #6B6560; }
+.qq-rank.bronze { color: #993C1D; }
+
+/* ============================================================
+   ANIMATIONS — Page Entry
+   ============================================================ */
+.qq-content > * {
+    animation: qq-slidein 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes qq-slidein {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   SCROLLBAR CUSTOM
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: var(--qq-border-strong);
+    border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--qq-text-muted); }
+
+/* ============================================================
+   RESPONSIVE — MOBILE
+   ============================================================ */
+@media (max-width: 768px) {
+    .qq-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .qq-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .qq-main {
+        margin-left: 0;
+    }
+
+    .qq-hamburger {
+        display: flex;
+    }
+
+    .qq-content {
+        padding: 16px;
+    }
+
+    .qq-topbar {
+        padding: 12px 16px;
+    }
+
+    .qq-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .qq-quiz-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .qq-ai-panel {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .qq-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .qq-theme-toggle span { display: none; }
+}
