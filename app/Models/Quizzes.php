@@ -30,11 +30,11 @@ class Quizzes extends Model
 
     public function questions()
     {
-        return $this->hasMany(Question::class)->orderBy('sort_order');
+        return $this->hasMany(Questions::class)->orderBy('sort_order');
     }
 
     public function attempts()
     {
-        return $this->hasMany(QuizAttempt::class);
+        return $this->hasMany(QuizAttempts::class);
     }
 }
